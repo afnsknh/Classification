@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Klasifikasi Citra Sampah</title>
+        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <!-- <link href="css/styles.css" rel="stylesheet" /> -->
+        <link rel="stylesheet" href="{{url_for('static', filename='assets/css/styles.css')}}">
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">Home</a><button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">Menu<i class="fas fa-bars"></i></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">Tentang Penelitian</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Training</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Test</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+                    <h1 class="mx-auto my-0 text-uppercase">Klasifikasi</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Kompleksitas Visual Citra Sampah</h2>
+                    <a class="btn btn-primary js-scroll-trigger" href="#about">Pelajari Obyek</a>
+                </div>
+            </div>
+        </header>
+        <!-- About-->
+        <section class="about-section text-center" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <h2 class="text-white mb-4">Tentang Penelitian</h2>
+                        <p class="text-white-50">Penelitian ini ditujukan untuk mengetahui seberapa berpengaruh nilai sudut di dalam citra untuk melakukan klasifikasi kompleksitas dari citra. <br>Dataset citra yang digunakan merupakan citra sampah lingkungan yang diambil dari Google Image dengan menggunakan filter citra yang bebas untuk digunakan kembali (<i>free used<i>). Citra dibagi menjadi 4 kelas yaitu Sangat Kotor (0), Kotor (1), Sedikit Bersih (2), dan Bersih (3). <br>Nilai sudut didapatkan dengan cara mengekstrak fitur citra menggunakan <a href="https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_feature2d/py_fast/py_fast.html">Algoritma FAST</a>. Setelah didapatkan nilai sudut citra maka dilakukan proses klasifikasi menggunakan metode <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Naive Bayes</a></p>
+                    </div>
+                </div>
+                <img class="img-fluid" src="assets/img/ipad.png" alt="" />
+            </div>
+        </section>
+        <!-- Projects-->
+        <section class="projects-section bg-light" id="projects">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto text-center">
+                        <h2 class="mx-auto">TRAINING SECTION</h2>
+                    </div>
+                    <form class="col-lg-8 mx-auto text-center" id="train_form" name="train_form" enctype="multipart/form-data" method="POST">
+                        <div class="col-lg-8 mx-auto text-center">
+                            <label>Data Training</label>
+                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" type="text" name="id_train" placeholder="% Data Train">
+                        </div>
+
+                        <div class="col-lg-8 mx-auto text-center">
+                            <label class="mt-2">Data Test</label>
+                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" type="text" id="id_test" name="id_test" placeholder="% Data Test">
+                        </div>
+
+                        <div class="col-lg-8 mx-auto text-center">
+                            <input id="proses" name='proses' type='hidden' value='training'>
+                            <button class="btn btn-primary mt-2" type="submit">TRAINING</button>
+                        </div>
+                    </form>        
+
+                    {% if proses=="training" %}
+                    <table class="col-lg-8 mt-4 ml-auto mr-auto text-center" border="1">
+                        <tr>
+                            <th>Jumlah Data Training</th>
+                            <th>Jumlah Data Test</th>
+                            <th>Jumlah Prediksi Benar</th>
+                            <th>Jumlah Prediksi Salah</th>
+                            <th>Nilai Akurasi</th>
+                        </tr>
+                        <tr>
+                            <td>{{jml_data_train}}</td>
+                            <td>{{jml_data_test}}</td>
+                            <td>{{benar}}</td>
+                            <td>{{salah}}</td>
+                            <td>{{akurasi}}</td>
+                        </tr>
+                    </table>
+                    {% endif %}     
+                </div>
+            </div>
+        </section>
+        
+        <!-- Signup-->
+        <section class="signup-section" id="signup">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 col-lg-8 mx-auto text-center">
+                        <h3 class="text-white mb-5">TEST SECTION</h3>
+
+                        <form class="form-inline d-flex" method="POST" id="test_form" name="test_form" enctype="multipart/form-data">
+                            <input class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="input_test" name="input_test" type="file"/>
+                            <input id="proses1" name='proses' type='hidden' value='testing'>
+                            <button class="btn btn-primary mx-auto" type="submit">Submit</button>
+                        </form>
+
+                        {% if proses=="testing" %}
+                        <table class="col-lg-8 mt-4 ml-auto mr-auto text-center" border="1">
+                            <tr>
+                                <th>Citra Test</th>
+                                <th>Nilai Sudut</th>
+                                <th>Probabilitas</th>>
+                                <th>Hasil Prediksi</th>
+                            </tr>
+                            <tr>
+                                <td><img class="img-thumbnail" src="{{url_for('static', filename='assets/data_test/')}}{{path}}"></td>
+                                <td>{{nilai_corner}}</td>
+                                <td>{{nilai_probabilitas}}</td>>
+                                <td>{{hasil_prediksi}}</td>
+                            </tr>
+                        </table>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact-->
+        <section class="contact-section bg-black">
+            <div class="container">
+                <div class="row">
+                    
+                </div>
+                <div class="social d-flex justify-content-center">
+                    <a class="mx-2" href="#!"><i class="fab fa-twitter"></i></a><a class="mx-2" href="#!"><i class="fab fa-facebook-f"></i></a><a class="mx-2" href="#!"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </section>
+        <!-- Footer-->
+        <footer class="footer bg-black small text-center text-white-50"><div class="container">Copyright © Afni Sakinah 160411100077</div></footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
